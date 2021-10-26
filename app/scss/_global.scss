@@ -22,6 +22,10 @@ body {
   padding: 0 15px;
 }
 
+.header--404-page {
+  background-color: $bg;
+}
+
 a {
   @extend %quicksand-500;
   color: $default;
