@@ -125,6 +125,7 @@
   }
   &__form {
     max-width: 470px;
+    height: 50px;
   }
   &__link {
     display: block;
@@ -136,6 +137,7 @@
   &__form-input {
     width: 100%;
     max-width: 320px;
+    margin-right: 3px;
     padding: 12px 10px 12px 15px;
     background-color: #fff;
     border: none;
