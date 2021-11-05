@@ -1,12 +1,14 @@
 const { src, dest, watch, parallel, series }  = require('gulp');
 
-const scss          = require('gulp-sass')(require('sass'));
-const concat        = require('gulp-concat');
-const autoprefixer  = require('gulp-autoprefixer');
-const uglify        = require('gulp-uglify');
-const imagemin      = require('gulp-imagemin');
-const del           = require('del');
-const browserSync   = require('browser-sync').create();
+const scss                = require('gulp-sass')(require('sass'));
+const concat              = require('gulp-concat');
+const autoprefixer        = require('gulp-autoprefixer');
+const uglify              = require('gulp-uglify');
+const imagemin            = require('gulp-imagemin');
+const rename              = require('gulp-rename');
+const nunjucksRender      = require('gulp-nunjucks-render');
+const del                 = require('del');
+const browserSync         = require('browser-sync').create();
 
 
 function browsersync() {
@@ -18,10 +20,21 @@ function browsersync() {
   })
 }
 
+function nunjucks() {
+  return src('app/*.njk')
+    .pipe(nunjucksRender())
+    .pipe(dest('app'))
+    .pipe(browserSync.stream())
+}
+
 function styles() {
-  return src('app/scss/style.scss')
+  // return src('app/scss/style.scss')
+  return src('app/**/*.scss')
   .pipe(scss({outputStyle: 'compressed'}))
-  .pipe(concat('style.min.css'))
+  // .pipe(concat('style.min.css'))
+  .pipe(rename({
+    suffix : '.min'
+  }))
   .pipe(autoprefixer({
     overrideBrowserslist: ['last 10 versions'],
     grid: true
@@ -76,7 +89,10 @@ function cleanDist() {
 }
 
 function wathing() {
-  watch(['app/scss/**/*.scss'], styles);
+  // watch(['app/scss/**/*.scss'], styles);
+
+  watch(['app/scss/**/*.scss'], styles);z
+  watch(['app/*.njk'], nunjucks);
   watch(['app/js/**/*.js', '!app/js/main.min.js'], scripts);
   watch(['app/**/*.html']).on('change', browserSync.reload);
 }
@@ -86,7 +102,8 @@ exports.scripts = scripts;
 exports.browsersync = browsersync;
 exports.wathing = wathing;
 exports.images = images;
+exports.nunjucks = nunjucks;
 exports.cleanDist = cleanDist;
 exports.build = series(cleanDist, images, build);
 
-exports.default = parallel(styles, scripts, browsersync, wathing);
+exports.default = parallel(nunjucks, styles, scripts, browsersync, wathing);
