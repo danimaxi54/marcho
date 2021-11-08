@@ -29,7 +29,7 @@ function nunjucks() {
 
 function styles() {
   // return src('app/scss/style.scss')
-  return src('app/**/*.scss')
+  return src('app/scss/*.scss')
   .pipe(scss({outputStyle: 'compressed'}))
   // .pipe(concat('style.min.css'))
   .pipe(rename({
@@ -91,7 +91,7 @@ function cleanDist() {
 function wathing() {
   // watch(['app/scss/**/*.scss'], styles);
 
-  watch(['app/scss/**/*.scss'], styles);z
+  watch(['app/**/*.scss'], styles);
   watch(['app/*.njk'], nunjucks);
   watch(['app/js/**/*.js', '!app/js/main.min.js'], scripts);
   watch(['app/**/*.html']).on('change', browserSync.reload);

@@ -1,4 +1,19 @@
 $(function () {
+
+  $('.menu__btn').on('click', function (){
+    $('.menu__list').toggleClass('menu__list--active');
+  });
+
+  $('.footer-top__title').on('click', function (){
+    // $(this).('.footer-top__list').slideToggle()
+    $(this).next().slideToggle()
+    $(this).toggleClass("active");
+  });
+
+  $(".shop__filter-btn").on('click', function() {
+    $('.shop__filters').slideToggle();
+  });
+
   $(".blog-page__slider").slick({
     prevArrow:
       '<button type="button" class="slick-prev"><svg xmlns="http://www.w3.org/2000/svg" width="9px" height="14px" viewBox="0 0 9 18" version="1.1"><g><path d="M 1.113281 8.402344 L 5.894531 3.621094 C 6.226562 3.289062 6.761719 3.289062 7.085938 3.621094 L 7.882812 4.414062 C 8.210938 4.746094 8.210938 5.28125 7.882812 5.609375 L 4.496094 9 L 7.886719 12.390625 C 8.214844 12.71875 8.214844 13.253906 7.886719 13.582031 L 7.089844 14.378906 C 6.761719 14.710938 6.226562 14.710938 5.898438 14.378906 L 1.117188 9.597656 C 0.785156 9.265625 0.785156 8.734375 1.113281 8.402344 Z M 1.113281 8.402344 "/></g></svg></button>',
@@ -31,6 +46,14 @@ $(function () {
     draggable: false,
     arrows: false,
     fade: true,
+    responsive: [
+      {
+        breakpoint: 1051,
+        settings: {
+          draggable: true,
+        },
+      },
+    ],
   });
 
   $(".shop-content__filter-btn").on("click", function () {
@@ -42,10 +65,12 @@ $(function () {
 
   $(".button-list").on("click", function () {
     $(".product-item").addClass("product-item--list");
+    $(".shop-content__inner").addClass("shop-content__nogrid");
   });
 
   $(".button-grid").on("click", function () {
     $(".product-item").removeClass("product-item--list");
+    $(".shop-content__inner").removeClass("shop-content__nogrid");
   });
 
   $(".select-style, .product-one__item-num").styler();
